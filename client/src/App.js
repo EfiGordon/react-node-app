@@ -1,9 +1,13 @@
-import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
 
-const Header = () => {
-  return (<h2>Header</h2>)
-}
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions';
+
+
+import './App.css';
+import Header from './components/Header';
+
 
 const Dashboard = () => {
   return (<h2>Dashboard</h2>)
@@ -13,18 +17,27 @@ const Landing = () => {
   return (<h2>Landing</h2>)
 }
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <div>
-          <Route path="/" component={Header} />
-          <Route path="/" exact={true} component={Landing} />
-          <Route path="/dashboard" component={Dashboard} />
-        </div>
-      </BrowserRouter>
-    </div>
-  );
+class App extends Component {
+  con
+
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+
+  render() {
+    return (
+      <div className="App container">
+        <BrowserRouter>
+          <div>
+            <Header />
+            <Route path="/" exact={true} component={Landing} />
+            <Route path="/dashboard" component={Dashboard} />
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
+
 }
 
-export default App;
+export default connect(null, actions)(App);
